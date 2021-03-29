@@ -72,7 +72,7 @@ public class ConsultaController {
         }
     }
 
-    @PutMapping("/(id)")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ConsultaEntity oConsultaEntity) {
 
         oConsultaEntity.setId(id);
@@ -83,7 +83,7 @@ public class ConsultaController {
         }
     }
     
-    @DeleteMapping("/(id)")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
     
     oConsultaRepository.deleteById(id);

@@ -71,7 +71,7 @@ public class EspecialidadController {
         }
     }
 
-    @PutMapping("/(id)")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody EspecialidadEntity oEspecialidadEntity) {
 
         oEspecialidadEntity.setId(id);
@@ -82,7 +82,7 @@ public class EspecialidadController {
         }
     }
     
-    @DeleteMapping("/(id)")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
     
     oEspecialidadRepository.deleteById(id);

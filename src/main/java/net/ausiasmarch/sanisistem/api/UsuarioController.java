@@ -75,7 +75,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/(id)")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody UsuarioEntity oUsuarioEntity) {
 
         oUsuarioEntity.setId(id);
@@ -86,7 +86,7 @@ public class UsuarioController {
         }
     }
     
-    @DeleteMapping("/(id)")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
     
     oUsuarioRepository.deleteById(id);

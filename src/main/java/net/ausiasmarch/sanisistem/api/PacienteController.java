@@ -72,16 +72,10 @@ public class PacienteController {
         
     }
 
-    @PutMapping("/(id)")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody PacienteEntity oPacienteEntity) {
 
-     /*   oPacienteEntity.setId(id);
-        if (oPacienteRepository.existsById(id)) {
-            return new ResponseEntity<>(oPacienteRepository.save(oPacienteEntity), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(0L, HttpStatus.NOT_MODIFIED);
-        }
-        */
+    
      if (oPacienteRepository.existsById(id)) {
             return new ResponseEntity<>(oPacienteRepository.getOne(id), HttpStatus.OK);
         } else {
@@ -89,9 +83,9 @@ public class PacienteController {
         }
     }
 
-    @DeleteMapping("/(id)")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        /*
+        
         oPacienteRepository.deleteById(id);
 
         if (oPacienteRepository.existsById(id)) {
@@ -99,11 +93,6 @@ public class PacienteController {
         } else {
             return new ResponseEntity<>(0L, HttpStatus.OK);
         }
-         */
-        if (oPacienteRepository.existsById(id)) {
-            return new ResponseEntity<>(oPacienteRepository.getOne(id), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
-        }
+
     }
 }
