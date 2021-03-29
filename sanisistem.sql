@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 23-03-2021 a las 18:44:22
--- Versión del servidor: 8.0.21
--- Versión de PHP: 7.3.23
+-- Tiempo de generación: 29-03-2021 a las 18:14:17
+-- Versión del servidor: 8.0.22
+-- Versión de PHP: 7.4.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,170 +24,157 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `consultas`
+-- Estructura de tabla para la tabla `consulta`
 --
 
-CREATE TABLE `consultas` (
-  `id_consulta` int NOT NULL,
-  `id_paciente` int NOT NULL,
-  `id_doctor` int NOT NULL,
+CREATE TABLE `consulta` (
+  `id` bigint NOT NULL,
+  `id_paciente` bigint NOT NULL,
+  `id_doctor` bigint NOT NULL,
   `fecha` datetime NOT NULL,
   `fecha_registro` date NOT NULL,
   `asistencia` tinyint(1) NOT NULL,
-  `motivo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `tratamiento` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `motivo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `tratamiento` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `doctores`
+-- Estructura de tabla para la tabla `doctor`
 --
 
-CREATE TABLE `doctores` (
-  `id_doctor` int NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `apellidos` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `dni` varchar(9) COLLATE utf8mb4_general_ci NOT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+CREATE TABLE `doctor` (
+  `id` bigint NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `apellidos` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `dni` varchar(9) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `telefono` int NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_especialidad` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_especialidad` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `especialidades`
+-- Estructura de tabla para la tabla `especialidad`
 --
 
-CREATE TABLE `especialidades` (
-  `id_especialidad` int NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `especialidad` (
+  `id` bigint NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pacientes`
+-- Estructura de tabla para la tabla `paciente`
 --
 
-CREATE TABLE `pacientes` (
-  `id_paciente` int NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `apellidos` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `dni` varchar(9) COLLATE utf8mb4_general_ci NOT NULL,
+CREATE TABLE `paciente` (
+  `id` bigint NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `apellidos` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `dni` varchar(9) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `telefono` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `paciente`
+--
+
+INSERT INTO `paciente` (`id`, `nombre`, `apellidos`, `dni`, `fecha_nacimiento`, `direccion`, `telefono`) VALUES
+(1, 'Oscar', 'Garcia Escriva', '20960437P', '1998-03-11', 'forn 4 Castellonet', 683584245);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuarios` (
-  `id_usuario` int NOT NULL,
-  `nombre` int NOT NULL,
-  `apellidos` int NOT NULL,
-  `dni` int NOT NULL,
+CREATE TABLE `usuario` (
+  `id` bigint NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `apellidos` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dni` varchar(9) COLLATE utf8_unicode_ci NOT NULL,
   `telefono` int NOT NULL,
-  `username` int NOT NULL,
-  `password` int NOT NULL,
-  `fecha_alta` int NOT NULL,
-  `cargo` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fecha_alta` date NOT NULL,
+  `cargo` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `consultas`
+-- Indices de la tabla `consulta`
 --
-ALTER TABLE `consultas`
-  ADD PRIMARY KEY (`id_consulta`),
-  ADD KEY `fk_consulta_doctor` (`id_doctor`),
-  ADD KEY `fk_consulta_paciente` (`id_paciente`);
+ALTER TABLE `consulta`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `doctores`
+-- Indices de la tabla `doctor`
 --
-ALTER TABLE `doctores`
-  ADD PRIMARY KEY (`id_doctor`),
-  ADD KEY `fk_doctor_especialidad` (`id_especialidad`);
+ALTER TABLE `doctor`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `especialidades`
+-- Indices de la tabla `especialidad`
 --
-ALTER TABLE `especialidades`
-  ADD PRIMARY KEY (`id_especialidad`);
+ALTER TABLE `especialidad`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `pacientes`
+-- Indices de la tabla `paciente`
 --
-ALTER TABLE `pacientes`
-  ADD PRIMARY KEY (`id_paciente`);
+ALTER TABLE `paciente`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_usuario`);
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `consultas`
+-- AUTO_INCREMENT de la tabla `consulta`
 --
-ALTER TABLE `consultas`
-  MODIFY `id_consulta` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `consulta`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `doctores`
+-- AUTO_INCREMENT de la tabla `doctor`
 --
-ALTER TABLE `doctores`
-  MODIFY `id_doctor` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `doctor`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `especialidades`
+-- AUTO_INCREMENT de la tabla `especialidad`
 --
-ALTER TABLE `especialidades`
-  MODIFY `id_especialidad` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `especialidad`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `pacientes`
+-- AUTO_INCREMENT de la tabla `paciente`
 --
-ALTER TABLE `pacientes`
-  MODIFY `id_paciente` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `paciente`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT de la tabla `usuario`
 --
-ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `consultas`
---
-ALTER TABLE `consultas`
-  ADD CONSTRAINT `fk_consulta_doctor` FOREIGN KEY (`id_doctor`) REFERENCES `doctores` (`id_doctor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_consulta_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_paciente`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Filtros para la tabla `doctores`
---
-ALTER TABLE `doctores`
-  ADD CONSTRAINT `fk_doctor_especialidad` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `usuario`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
