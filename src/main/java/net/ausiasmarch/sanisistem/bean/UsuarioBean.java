@@ -21,19 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.ausiasmarch.sanisistem.api;
+package net.ausiasmarch.sanisistem.bean;
 
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+/**
+ *
+ * @author Oscar
+ */
+public class UsuarioBean {
 
-@RestController
-@RequestMapping("/")
-public class AppController {
+    private String username;
+    private String password;
 
-    @Autowired
-    HttpSession oHttpSession;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }
