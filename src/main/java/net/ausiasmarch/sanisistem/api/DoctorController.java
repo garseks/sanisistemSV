@@ -23,11 +23,18 @@
  */
 package net.ausiasmarch.sanisistem.api;
 
-
+import net.ausiasmarch.sanisistem.entity.ConsultaEntity;
 import net.ausiasmarch.sanisistem.entity.DoctorEntity;
+import net.ausiasmarch.sanisistem.entity.EspecialidadEntity;
+import net.ausiasmarch.sanisistem.entity.PacienteEntity;
 import net.ausiasmarch.sanisistem.repository.ConsultaRepository;
 import net.ausiasmarch.sanisistem.repository.DoctorRepository;
+import net.ausiasmarch.sanisistem.repository.EspecialidadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,6 +52,9 @@ public class DoctorController {
 
     @Autowired
     DoctorRepository oDoctorRepository;
+
+    @Autowired
+    EspecialidadRepository oEspecialidadRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable(value = "id") Long id) {
@@ -83,17 +93,38 @@ public class DoctorController {
             return new ResponseEntity<>(0L, HttpStatus.NOT_MODIFIED);
         }
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-    
-    oDoctorRepository.deleteById(id);
 
-                if (oDoctorRepository.existsById(id)) {
-                    return new ResponseEntity<>(id, HttpStatus.NOT_MODIFIED);
-                } else {
-                    return new ResponseEntity<>(0L, HttpStatus.OK);
-                }
-               
+        oDoctorRepository.deleteById(id);
+
+        if (oDoctorRepository.existsById(id)) {
+            return new ResponseEntity<>(id, HttpStatus.NOT_MODIFIED);
+        } else {
+            return new ResponseEntity<>(0L, HttpStatus.OK);
+        }
+
     }
+
+    @GetMapping("/page")
+    public ResponseEntity<?> getPage(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable oPageable) {
+
+        Page<DoctorEntity> oPage = oDoctorRepository.findAll(oPageable);
+        return new ResponseEntity<>(oPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/page/especialidad/{id}")
+    public ResponseEntity<?> getPageXEspecialidad(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable oPageable, @PathVariable(value = "id") Long id) {
+
+        if (oEspecialidadRepository.existsById(id)) {
+            EspecialidadEntity oEspecialidadEntity = oEspecialidadRepository.getOne(id);
+            Page<DoctorEntity> oPage = oDoctorRepository.findByEspecialidad(oEspecialidadEntity, oPageable);
+            return new ResponseEntity<>(oPage, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+
+    }
+
 }

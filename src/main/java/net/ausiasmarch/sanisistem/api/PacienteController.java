@@ -26,6 +26,10 @@ package net.ausiasmarch.sanisistem.api;
 import net.ausiasmarch.sanisistem.entity.PacienteEntity;
 import net.ausiasmarch.sanisistem.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,19 +68,18 @@ public class PacienteController {
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody PacienteEntity oPacienteEntity) {
-       if (oPacienteEntity.getId() == null) {
+        if (oPacienteEntity.getId() == null) {
             return new ResponseEntity<>(oPacienteRepository.save(oPacienteEntity), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(0, HttpStatus.NOT_MODIFIED);
         }
-        
+
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody PacienteEntity oPacienteEntity) {
 
-    
-     if (oPacienteRepository.existsById(id)) {
+        if (oPacienteRepository.existsById(id)) {
             return new ResponseEntity<>(oPacienteRepository.getOne(id), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
@@ -85,7 +88,7 @@ public class PacienteController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        
+
         oPacienteRepository.deleteById(id);
 
         if (oPacienteRepository.existsById(id)) {
@@ -94,5 +97,12 @@ public class PacienteController {
             return new ResponseEntity<>(0L, HttpStatus.OK);
         }
 
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<?> getPage(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable oPageable) {
+
+        Page<PacienteEntity> oPage = oPacienteRepository.findAll(oPageable);
+        return new ResponseEntity<>(oPage, HttpStatus.OK);
     }
 }

@@ -24,12 +24,19 @@
 package net.ausiasmarch.sanisistem.repository;
 
 import net.ausiasmarch.sanisistem.entity.ConsultaEntity;
+import net.ausiasmarch.sanisistem.entity.DoctorEntity;
+import net.ausiasmarch.sanisistem.entity.PacienteEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Oscar
  */
-public interface ConsultaRepository extends JpaRepository<ConsultaEntity, Long>  {
-    
+public interface ConsultaRepository extends JpaRepository<ConsultaEntity, Long> {
+
+    Page<ConsultaEntity> findByDoctor(DoctorEntity oDoctorEntity, Pageable oPageable);
+
+    Page<ConsultaEntity> findByPaciente(PacienteEntity oPacienteEntity, Pageable oPageable);
 }

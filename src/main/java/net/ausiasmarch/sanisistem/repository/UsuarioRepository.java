@@ -30,6 +30,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Oscar
  */
-public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long>   {
-    
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
+
 }

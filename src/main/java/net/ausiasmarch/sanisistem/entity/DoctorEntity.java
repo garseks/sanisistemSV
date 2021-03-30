@@ -7,18 +7,25 @@ package net.ausiasmarch.sanisistem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "doctor")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class DoctorEntity implements Serializable{
-    
+public class DoctorEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,7 +36,13 @@ public class DoctorEntity implements Serializable{
     private String direccion;
     private Integer telefono;
     private String email;
-    private Long id_especialidad;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @JoinColumn(name = "id_especialidad")
+    private EspecialidadEntity especialidad;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = {CascadeType.REFRESH})
+    private List<ConsultaEntity> consultas = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -87,13 +100,16 @@ public class DoctorEntity implements Serializable{
         this.email = email;
     }
 
-    public Long getId_especialidad() {
-        return id_especialidad;
+    public EspecialidadEntity getEspecialidad() {
+        return especialidad;
     }
 
-    public void setId_especialidad(Long id_especialidad) {
-        this.id_especialidad = id_especialidad;
+    public void setEspecialidad(EspecialidadEntity especialidad) {
+        this.especialidad = especialidad;
     }
-    
-    
+
+    public int getConsultas() {
+        return consultas.size();
+    }
+
 }

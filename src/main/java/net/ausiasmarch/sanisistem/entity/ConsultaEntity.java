@@ -9,23 +9,35 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "consulta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class ConsultaEntity implements Serializable{
+public class ConsultaEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    private Long id_paciente;
-    private Long id_doctor;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @JoinColumn(name = "id_paciente")
+    private PacienteEntity paciente;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @JoinColumn(name = "id_doctor")
+    private DoctorEntity doctor;
+
     private LocalDateTime fecha;
     private Date fecha_registro;
     private boolean asistencia;
@@ -40,20 +52,20 @@ public class ConsultaEntity implements Serializable{
         this.id = id;
     }
 
-    public Long getId_paciente() {
-        return id_paciente;
+    public PacienteEntity getPaciente() {
+        return paciente;
     }
 
-    public void setId_paciente(Long id_paciente) {
-        this.id_paciente = id_paciente;
+    public void setPaciente(PacienteEntity paciente) {
+        this.paciente = paciente;
     }
 
-    public Long getId_doctor() {
-        return id_doctor;
+    public DoctorEntity getDoctor() {
+        return doctor;
     }
 
-    public void setId_doctor(Long id_doctor) {
-        this.id_doctor = id_doctor;
+    public void setDoctor(DoctorEntity doctor) {
+        this.doctor = doctor;
     }
 
     public LocalDateTime getFecha() {
@@ -95,6 +107,5 @@ public class ConsultaEntity implements Serializable{
     public void setTratamiento(String tratamiento) {
         this.tratamiento = tratamiento;
     }
-    
-    
+
 }

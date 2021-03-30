@@ -18,7 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuario")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class UsuarioEntity implements Serializable{
+public class UsuarioEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,7 +32,7 @@ public class UsuarioEntity implements Serializable{
     private String password;
     private Date fecha_alta;
     private Long cargo;
-    
+
     public Long getId() {
         return id;
     }
@@ -103,7 +104,5 @@ public class UsuarioEntity implements Serializable{
     public void setCargo(Long cargo) {
         this.cargo = cargo;
     }
-    
-    
-    
+
 }

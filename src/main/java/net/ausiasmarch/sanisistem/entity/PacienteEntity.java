@@ -7,12 +7,17 @@ package net.ausiasmarch.sanisistem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +35,9 @@ public class PacienteEntity implements Serializable {
     private Date fecha_nacimiento;
     private String direccion;
     private int telefono;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente", cascade = {CascadeType.REFRESH})
+    private List<ConsultaEntity> consultas = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -86,6 +94,9 @@ public class PacienteEntity implements Serializable {
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
-    
+
+    public int getConsultas() {
+        return consultas.size();
+    }
 
 }

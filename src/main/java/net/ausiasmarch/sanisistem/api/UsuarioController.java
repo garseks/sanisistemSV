@@ -26,6 +26,10 @@ package net.ausiasmarch.sanisistem.api;
 import net.ausiasmarch.sanisistem.entity.UsuarioEntity;
 import net.ausiasmarch.sanisistem.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,17 +89,24 @@ public class UsuarioController {
             return new ResponseEntity<>(0L, HttpStatus.NOT_MODIFIED);
         }
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-    
-    oUsuarioRepository.deleteById(id);
 
-                if (oUsuarioRepository.existsById(id)) {
-                    return new ResponseEntity<>(id, HttpStatus.NOT_MODIFIED);
-                } else {
-                    return new ResponseEntity<>(0L, HttpStatus.OK);
-                }
-               
+        oUsuarioRepository.deleteById(id);
+
+        if (oUsuarioRepository.existsById(id)) {
+            return new ResponseEntity<>(id, HttpStatus.NOT_MODIFIED);
+        } else {
+            return new ResponseEntity<>(0L, HttpStatus.OK);
+        }
+
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<?> getPage(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable oPageable) {
+
+        Page<UsuarioEntity> oPage = oUsuarioRepository.findAll(oPageable);
+        return new ResponseEntity<>(oPage, HttpStatus.OK);
     }
 }

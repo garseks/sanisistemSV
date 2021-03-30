@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SanisistemApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SanisistemApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SanisistemApplication.class, args);
+    }
 
 }

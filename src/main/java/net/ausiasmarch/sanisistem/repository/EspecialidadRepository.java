@@ -30,6 +30,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Oscar
  */
-public interface EspecialidadRepository extends JpaRepository<EspecialidadEntity, Long>  {
-    
+public interface EspecialidadRepository extends JpaRepository<EspecialidadEntity, Long> {
+
 }
